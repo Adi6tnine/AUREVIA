@@ -200,6 +200,53 @@
       </div>
     </div>
 
+    <!-- Interactive script for the splash screen: 3D parallax effect -->
+    <script>
+      (function() {
+        const wrap = document.querySelector('.loader-pearl-wrap');
+        const title = document.querySelector('.loader-title');
+        const sub = document.querySelector('.loader-sub');
+        if (!wrap || !title || !sub) return;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        function updateMouse(x, y) {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          // Normalize to range [-1, 1]
+          mouseX = (x / w) * 2 - 1;
+          mouseY = (y / h) * 2 - 1;
+        }
+
+        window.addEventListener('mousemove', (e) => updateMouse(e.clientX, e.clientY));
+        window.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        function animate() {
+          const loader = document.getElementById('app-loader');
+          // Stop animating if loader is removed (React finished hydrating)
+          if (!loader || !document.contains(loader)) return;
+
+          // Smooth lerp
+          currentX += (mouseX - currentX) * 0.08;
+          currentY += (mouseY - currentY) * 0.08;
+
+          // Apply 3D parallax transformations
+          wrap.style.transform = `perspective(800px) rotateX(${-currentY * 30}deg) rotateY(${currentX * 30}deg) translate(${currentX * 15}px, ${currentY * 15}px)`;
+          title.style.transform = `perspective(800px) translate(${currentX * 8}px, ${currentY * 8}px)`;
+          sub.style.transform = `perspective(800px) translate(${currentX * -5}px, ${currentY * -5}px)`;
+
+          requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+      })();
+    </script>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
