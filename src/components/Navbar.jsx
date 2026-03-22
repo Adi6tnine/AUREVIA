@@ -39,7 +39,7 @@ const Navbar = ({ cartCount, onCartOpen }) => {
 
           {/* Left — hamburger (mobile) / nav links (desktop) */}
           <div className="flex-1 flex items-center">
-            <button onClick={() => setMobileMenuOpen(true)} className="md:hidden p-2 -ml-1">
+            <button aria-label="Open menu" onClick={() => setMobileMenuOpen(true)} className="md:hidden p-2 -ml-1">
               <Menu size={20} className="text-[#2C2826]" />
             </button>
             <div className="hidden md:flex space-x-10 text-xs tracking-[0.15em] uppercase text-[#6B6B6B]">

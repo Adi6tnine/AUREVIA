@@ -40,7 +40,9 @@ const PremiumImage = ({ src, alt, className, eager = false }) => {
         url.searchParams.set('fm', 'webp');
         url.searchParams.set('q', '60');
         url.searchParams.set('auto', 'format');
-        return url.toString(); // Cleanly formats `?q=60&w=800&fm=webp&auto=format`
+        // Force width to 600px to avoid Lighthouse complaining about "Intrinsic size > Rendered size"
+        url.searchParams.set('w', '600'); 
+        return url.toString(); 
       }
     } catch {
       // Return original safely if URL fails to parse
