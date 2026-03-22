@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { customEase } from '../utils/constants';
@@ -12,12 +12,12 @@ const FooterCol = ({ title, links }) => (
     <ul className="space-y-3">
       {links.map((link) => (
         <li key={link.label}>
-          <a
-            href={link.href || '#'}
+          <Link
+            to={link.to}
             className="text-[11px] tracking-[0.15em] uppercase text-[#FDFBF7]/50 hover:text-[#FDFBF7] transition-colors duration-300 font-sans-ui"
           >
             {link.label}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
@@ -96,34 +96,34 @@ const Footer = () => {
           <FooterCol
             title="Shop"
             links={[
-              { label: 'All Pieces', href: '/shop' },
-              { label: 'Necklaces' },
-              { label: 'Earrings' },
-              { label: 'Rings' },
-              { label: 'New Arrivals' },
-              { label: 'Bestsellers' },
+              { label: 'All Pieces', to: '/shop' },
+              { label: 'Necklaces', to: '/shop' },
+              { label: 'Earrings', to: '/shop' },
+              { label: 'Rings', to: '/shop' },
+              { label: 'New Arrivals', to: '/shop' },
+              { label: 'Bestsellers', to: '/shop' },
             ]}
           />
 
           <FooterCol
             title="About"
             links={[
-              { label: 'Our Story' },
-              { label: 'Craftsmanship' },
-              { label: 'Sustainability' },
-              { label: 'Press' },
-              { label: 'Stockists' },
+              { label: 'Our Story', to: '/our-story' },
+              { label: 'Craftsmanship', to: '/craftsmanship' },
+              { label: 'Sustainability', to: '/sustainability' },
+              { label: 'Press', to: '/press' },
+              { label: 'Stockists', to: '/stockists' },
             ]}
           />
 
           <FooterCol
             title="Help"
             links={[
-              { label: 'Shipping & Returns' },
-              { label: 'Size Guide' },
-              { label: 'Care Instructions' },
-              { label: 'Contact Us' },
-              { label: 'FAQ' },
+              { label: 'Shipping & Returns', to: '/shipping' },
+              { label: 'Size Guide', to: '/size-guide' },
+              { label: 'Care Instructions', to: '/care' },
+              { label: 'Contact Us', to: '/contact' },
+              { label: 'FAQ', to: '/faq' },
             ]}
           />
         </div>
@@ -134,9 +134,9 @@ const Footer = () => {
             © 2026 Aurevia. All rights reserved.
           </p>
           <div className="flex gap-6 text-[9px] tracking-[0.2em] uppercase text-[#FDFBF7]/20 font-sans-ui">
-            <a href="#" className="hover:text-[#FDFBF7]/50 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-[#FDFBF7]/50 transition-colors">Terms</a>
-            <a href="#" className="hover:text-[#FDFBF7]/50 transition-colors">Cookies</a>
+            <Link to="/privacy" className="hover:text-[#FDFBF7]/50 transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-[#FDFBF7]/50 transition-colors">Terms</Link>
+            <Link to="/cookies" className="hover:text-[#FDFBF7]/50 transition-colors">Cookies</Link>
           </div>
           <div className="flex gap-5 text-[9px] tracking-[0.3em] uppercase text-[#FDFBF7]/30 font-sans-ui">
             <a href="#" className="hover:text-[#C9A96E] transition-colors">Instagram</a>
