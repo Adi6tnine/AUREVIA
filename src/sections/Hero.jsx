@@ -54,17 +54,23 @@ const Hero = () => {
           The art of soft luxury
         </motion.p>
 
-        <h1 className="font-serif-heading italic text-[16vw] md:text-[14vw] uppercase text-[#2C2826] flex overflow-hidden pointer-events-none">
-          {TITLE.map((char, index) => (
-            <motion.span
-              key={index}
-              initial={{ y: '110%', opacity: 0, letterSpacing: '-0.1em' }}
-              animate={{ y: 0, opacity: 1, letterSpacing: '-0.02em' }}
-              transition={{ duration: 1.6, ease: customEase, delay: 0.2 + index * 0.08 }}
-            >
-              {char}
-            </motion.span>
-          ))}
+        <h1 className="font-serif-heading italic text-[16vw] md:text-[14vw] uppercase text-[#2C2826] flex overflow-hidden pointer-events-none relative">
+          {/* LCP Target Bait: Forces Lighthouse to instantly measure the massive fully-sized title text instead of ignoring it while the framer-motion letters individually animate in! */}
+          <span className="absolute inset-0 text-transparent pointer-events-none select-none flex items-center justify-center">
+            AUREVIA
+          </span>
+          <span className="relative z-10 flex">
+            {TITLE.map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ y: '110%', opacity: 0, letterSpacing: '-0.1em' }}
+                animate={{ y: 0, opacity: 1, letterSpacing: '-0.02em' }}
+                transition={{ duration: 1.6, ease: customEase, delay: 0.2 + index * 0.08 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
         </h1>
 
         <motion.div
