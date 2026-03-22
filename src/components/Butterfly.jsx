@@ -65,7 +65,7 @@ const Butterfly = ({ size = 85, className = '' }) => {
   return (
     <motion.span
       className={`inline-block pointer-events-none select-none ${className}`}
-      style={{ rotate: '20deg', display: 'inline-flex' }}
+      style={{ rotate: '20deg' }}
       animate={{ y: [0, -3, 0, -2, 0] }}
       transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
     >
