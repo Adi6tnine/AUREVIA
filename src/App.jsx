@@ -54,18 +54,29 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  // Remove the splash screen once the app is ready
+  // Remove the splash screen once the app is ready + Minimum display time
   useEffect(() => {
     const loader = document.getElementById('app-loader');
-    if (loader) {
-      // Delay just slightly to ensure all fonts/paint operations settle
-      const timeout = setTimeout(() => {
-        loader.classList.add('fade-out');
-        // Remove it from DOM completely after transition (700ms) finishes
-        setTimeout(() => loader.remove(), 700);
-      }, 150);
-      return () => clearTimeout(timeout);
-    }
+    if (!loader) return;
+
+    // We guarantee the loader is visible for at least 1500ms.
+    // This serves two critical purposes:
+    // 1. It lets the loading progress bar complete its full CSS animation smoothly.
+    // 2. It gives the browser 1.5 seconds to download custom fonts, decode heavy LCP images,
+    //    and complete GPU compositing in the blocked React DOM *behind* the loader.
+    // When the loader finally fades, the site is 100% painted and perfectly stutter-free.
+    const startTime = window.__APP_START_TIME__ || performance.now();
+    const elapsed = performance.now() - startTime;
+    const minDelay = 1500;
+    const remainingTime = Math.max(0, minDelay - elapsed);
+
+    const timeout = setTimeout(() => {
+      loader.classList.add('fade-out');
+      // Remove it from DOM completely after CSS transition (700ms) finishes
+      setTimeout(() => loader.remove(), 700);
+    }, remainingTime);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const addToast = useCallback((message, type = 'success') => {
