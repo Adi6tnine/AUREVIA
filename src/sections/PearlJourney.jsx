@@ -11,12 +11,12 @@ const PearlJourney = () => {
 
   const pearlOpacity = useTransform(scrollYProgress, [0, 0.1, 0.45, 0.55], [0, 1, 1, 0]);
   const pearlScale = useTransform(scrollYProgress, [0, 0.45], [0.8, isMobile ? 1.2 : 1.8]);
-  const pearlRotate = isMobile ? 0 : useTransform(scrollYProgress, [0, 0.45], [0, 90]);
-  const pearlBlur = isMobile ? 'blur(0px)' : useTransform(scrollYProgress, [0.4, 0.55], ['blur(0px)', 'blur(60px)']);
+  const pearlRotate = useTransform(scrollYProgress, [0, 0.45], [0, isMobile ? 0 : 90]);
+  const pearlBlur = useTransform(scrollYProgress, [0.4, 0.55], [isMobile ? 'blur(0px)' : 'blur(0px)', isMobile ? 'blur(0px)' : 'blur(60px)']);
 
   const productOpacity = useTransform(scrollYProgress, [0.48, 0.58, 0.9, 1], [0, 1, 1, 0]);
   const productScale = useTransform(scrollYProgress, [0.48, 0.65], [0.9, 1]);
-  const productBlur = isMobile ? 'blur(0px)' : useTransform(scrollYProgress, [0.48, 0.6], ['blur(30px)', 'blur(0px)']);
+  const productBlur = useTransform(scrollYProgress, [0.48, 0.6], [isMobile ? 'blur(0px)' : 'blur(30px)', 'blur(0px)']);
 
   const sweepX = useTransform(scrollYProgress, [0.4, 0.6], ['-100%', '200%']);
   const sweepOpacity = useTransform(scrollYProgress, [0.4, 0.5, 0.6], [0, 0.2, 0]);
