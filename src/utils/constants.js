@@ -81,7 +81,7 @@ export const PRODUCTS = [
     price: 185,
     category: 'Necklaces',
     images: [
-      'https://images.unsplash.com/photo-1515562141207-7a8efbf80e46?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1599643477874-c58f0e55b169?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800',
     ],
@@ -102,7 +102,7 @@ export const PRODUCTS = [
     category: 'Earrings',
     images: [
       'https://images.unsplash.com/photo-1573408301145-b98c413a290d?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1515562141207-7a8efbf80e46?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800',
     ],
     tag: 'New',
     stock: 8,
@@ -178,7 +178,7 @@ export const PRODUCTS = [
     category: 'Necklaces',
     images: [
       'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1515562141207-7a8efbf80e46?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800',
     ],
     tag: 'Bestseller',
     stock: 2,
