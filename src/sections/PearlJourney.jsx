@@ -10,13 +10,13 @@ const PearlJourney = () => {
   const isMobile = useIsMobile();
 
   const pearlOpacity = useTransform(scrollYProgress, [0, 0.1, 0.45, 0.55], [0, 1, 1, 0]);
-  const pearlScale = useTransform(scrollYProgress, [0, 0.45], [0.8, isMobile ? 1.4 : 1.8]);
-  const pearlRotate = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
-  const pearlBlur = useTransform(scrollYProgress, [0.4, 0.55], ['blur(0px)', 'blur(60px)']);
+  const pearlScale = useTransform(scrollYProgress, [0, 0.45], [0.8, isMobile ? 1.2 : 1.8]);
+  const pearlRotate = isMobile ? 0 : useTransform(scrollYProgress, [0, 0.45], [0, 90]);
+  const pearlBlur = isMobile ? 'blur(0px)' : useTransform(scrollYProgress, [0.4, 0.55], ['blur(0px)', 'blur(60px)']);
 
   const productOpacity = useTransform(scrollYProgress, [0.48, 0.58, 0.9, 1], [0, 1, 1, 0]);
-  const productScale = useTransform(scrollYProgress, [0.48, 0.65], [0.8, 1]);
-  const productBlur = useTransform(scrollYProgress, [0.48, 0.6], ['blur(30px)', 'blur(0px)']);
+  const productScale = useTransform(scrollYProgress, [0.48, 0.65], [0.9, 1]);
+  const productBlur = isMobile ? 'blur(0px)' : useTransform(scrollYProgress, [0.48, 0.6], ['blur(30px)', 'blur(0px)']);
 
   const sweepX = useTransform(scrollYProgress, [0.4, 0.6], ['-100%', '200%']);
   const sweepOpacity = useTransform(scrollYProgress, [0.4, 0.5, 0.6], [0, 0.2, 0]);
@@ -32,7 +32,7 @@ const PearlJourney = () => {
           style={{ opacity: pearlOpacity, scale: pearlScale, rotate: pearlRotate, filter: pearlBlur }}
           className="absolute z-10"
         >
-          <RealisticPearl className="w-48 h-48 md:w-80 md:h-80" />
+          <RealisticPearl className="w-48 h-48 md:w-80 md:h-80" animatePulse={!isMobile} />
         </motion.div>
 
         {/* Light sweep */}
@@ -47,9 +47,10 @@ const PearlJourney = () => {
           className="absolute z-20 w-[80vw] md:w-[20rem] aspect-[4/5] rounded-[120px] overflow-hidden shadow-[0_40px_100px_rgba(44,40,38,0.1)] bg-white border border-white/60"
         >
           <PremiumImage
-            src="https://images.unsplash.com/photo-1599643477874-c58f0e55b169?q=80&w=1200"
+            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200"
             alt="The Journey"
             className="w-full h-full"
+            eager
           />
           <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
         </motion.div>
