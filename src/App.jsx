@@ -10,12 +10,28 @@ import ProductModal from './components/ProductModal';
 import Toast from './components/Toast';
 
 import Home from './pages/Home';
-import ShopPage from './pages/ShopPage';
-import {
-  OurStoryPage, CraftsmanshipPage, SustainabilityPage, PressPage, StockistsPage,
-  ShippingPage, SizeGuidePage, CarePage, ContactPage, FAQPage,
-  PrivacyPage, TermsPage, CookiesPage,
-} from './pages/StaticPage';
+import { lazy, Suspense } from 'react';
+
+// Lazy-loaded routes to drastically cut down initial JS execution time
+const ShopPage = lazy(() => import('./pages/ShopPage'));
+
+const lazyStatic = (importName) => lazy(() => 
+  import('./pages/StaticPage').then(m => ({ default: m[importName] }))
+);
+
+const OurStoryPage = lazyStatic('OurStoryPage');
+const CraftsmanshipPage = lazyStatic('CraftsmanshipPage');
+const SustainabilityPage = lazyStatic('SustainabilityPage');
+const PressPage = lazyStatic('PressPage');
+const StockistsPage = lazyStatic('StockistsPage');
+const ShippingPage = lazyStatic('ShippingPage');
+const SizeGuidePage = lazyStatic('SizeGuidePage');
+const CarePage = lazyStatic('CarePage');
+const ContactPage = lazyStatic('ContactPage');
+const FAQPage = lazyStatic('FAQPage');
+const PrivacyPage = lazyStatic('PrivacyPage');
+const TermsPage = lazyStatic('TermsPage');
+const CookiesPage = lazyStatic('CookiesPage');
 
 import useIsMobile from './hooks/useIsMobile';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -152,23 +168,25 @@ export default function App() {
 
       <main className="min-h-screen">
         <AnimatePresence>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} />} />
-            <Route path="/shop" element={<ShopPage onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} recentlyViewed={recentlyViewed} />} />
-            <Route path="/our-story" element={<OurStoryPage />} />
-            <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
-            <Route path="/sustainability" element={<SustainabilityPage />} />
-            <Route path="/press" element={<PressPage />} />
-            <Route path="/stockists" element={<StockistsPage />} />
-            <Route path="/shipping" element={<ShippingPage />} />
-            <Route path="/size-guide" element={<SizeGuidePage />} />
-            <Route path="/care" element={<CarePage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/cookies" element={<CookiesPage />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} />} />
+              <Route path="/shop" element={<ShopPage onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} recentlyViewed={recentlyViewed} />} />
+              <Route path="/our-story" element={<OurStoryPage />} />
+              <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
+              <Route path="/sustainability" element={<SustainabilityPage />} />
+              <Route path="/press" element={<PressPage />} />
+              <Route path="/stockists" element={<StockistsPage />} />
+              <Route path="/shipping" element={<ShippingPage />} />
+              <Route path="/size-guide" element={<SizeGuidePage />} />
+              <Route path="/care" element={<CarePage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/cookies" element={<CookiesPage />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </main>
 

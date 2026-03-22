@@ -30,7 +30,17 @@ const PremiumImage = ({ src, alt, className, eager = false }) => {
   }, [src]);
 
   const isLoaded = status === 'loaded';
-  const imgSrc = status === 'error' ? FALLBACK : src;
+  
+  // Force WebP and compression on Unsplash URLs to drastically cut LCP payload
+  const optimizeUrl = (url) => {
+    if (!url || typeof url !== 'string') return url;
+    if (url.includes('unsplash.com') && !url.includes('fm=')) {
+      return url + (url.includes('?') ? '&' : '?') + 'fm=webp&q=70&auto=format';
+    }
+    return url;
+  };
+
+  const imgSrc = status === 'error' ? optimizeUrl(FALLBACK) : optimizeUrl(src);
 
   return (
     <div className={`relative overflow-hidden bg-[#F5EDD8]/40 ${className}`}>
