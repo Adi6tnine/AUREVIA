@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import Hero from '../sections/Hero';
-import PearlJourney from '../sections/PearlJourney';
-import FeaturedProducts from '../sections/FeaturedProducts';
-import Testimonials from '../sections/Testimonials';
 import TrustBar from '../components/TrustBar';
+
+// Lazy-load below-the-fold sections so the main thread doesn't choke on mount
+const PearlJourney = lazy(() => import('../sections/PearlJourney'));
+const FeaturedProducts = lazy(() => import('../sections/FeaturedProducts'));
+const Testimonials = lazy(() => import('../sections/Testimonials'));
 import PremiumButton from '../components/PremiumButton';
 import PremiumImage from '../components/PremiumImage';
 import { customEase } from '../utils/constants';
@@ -24,17 +27,19 @@ const Home = ({ onProductClick, wishlist, onWishlist }) => {
       {/* Trust marquee right after hero */}
       <TrustBar />
 
-      <PearlJourney />
+      <Suspense fallback={<div className="h-64" />}>
+        <PearlJourney />
 
-      {/* Featured products */}
-      <FeaturedProducts
-        onProductClick={onProductClick}
-        wishlist={wishlist}
-        onWishlist={onWishlist}
-      />
+        {/* Featured products */}
+        <FeaturedProducts
+          onProductClick={onProductClick}
+          wishlist={wishlist}
+          onWishlist={onWishlist}
+        />
 
-      {/* Testimonials */}
-      <Testimonials />
+        {/* Testimonials */}
+        <Testimonials />
+      </Suspense>
 
       {/* Story / CTA section */}
       <section className="bg-[#FDFBF7] py-20 md:py-32">
