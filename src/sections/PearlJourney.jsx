@@ -47,7 +47,7 @@ const PearlJourney = () => {
           className="absolute z-20 w-[80vw] md:w-[20rem] aspect-[4/5] rounded-[120px] overflow-hidden shadow-[0_40px_100px_rgba(44,40,38,0.1)] bg-white border border-white/60"
         >
           <PremiumImage
-            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200"
+            src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=1200"
             alt="The Journey"
             className="w-full h-full"
             eager
