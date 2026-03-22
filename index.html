@@ -175,18 +175,21 @@
       .loader-bar-fill {
         height: 100%;
         background: #C9A96E;
-        width: 0%;
+        width: 100%;
+        transform-origin: left;
+        transform: scaleX(0);
         border-radius: 2px;
+        will-change: transform;
         /* Simulates natural network loading stutter */
         animation: fake-loading 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
       }
 
       @keyframes fake-loading {
-        0%   { width: 0%; }
-        35%  { width: 45%; }
-        60%  { width: 75%; }
-        85%  { width: 85%; }
-        100% { width: 100%; }
+        0%   { transform: scaleX(0); }
+        35%  { transform: scaleX(0.45); }
+        60%  { transform: scaleX(0.75); }
+        85%  { transform: scaleX(0.85); }
+        100% { transform: scaleX(1); }
       }
     </style>
   </head>

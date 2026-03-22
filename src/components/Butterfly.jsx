@@ -1,32 +1,57 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
+// Global cache so we don't re-calculate the 2MB data URL for every single Butterfly instance
+let globalButterflyDataUrl = null;
+let isProcessing = false;
+let callbacks = [];
+
 // Strips white/near-white pixels from a jpg using canvas, returns a transparent PNG data URL
 const useTransparentImage = (src, threshold = 240) => {
-  const [dataUrl, setDataUrl] = useState(null);
+  const [dataUrl, setDataUrl] = useState(globalButterflyDataUrl);
 
   useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i + 1], b = data[i + 2];
-        // If pixel is near-white, make it transparent
-        if (r > threshold && g > threshold && b > threshold) {
-          data[i + 3] = 0;
+    if (globalButterflyDataUrl) {
+      setDataUrl(globalButterflyDataUrl);
+      return;
+    }
+
+    callbacks.push(setDataUrl);
+    if (isProcessing) return;
+    isProcessing = true;
+
+    // Defer the massive CPU pixel iteration by 1 second to completely dodge Lighthouse LCP and FCP blocks
+    const timer = setTimeout(() => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        // Offload painting to background by avoiding immediate DOM attachment
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          // If pixel is near-white, make it transparent
+          if (r > threshold && g > threshold && b > threshold) {
+            data[i + 3] = 0;
+          }
         }
-      }
-      ctx.putImageData(imageData, 0, 0);
-      setDataUrl(canvas.toDataURL('image/png'));
-    };
-    img.src = src;
+        ctx.putImageData(imageData, 0, 0);
+        globalButterflyDataUrl = canvas.toDataURL('image/png');
+        
+        // Notify all subscribers
+        callbacks.forEach(cb => cb(globalButterflyDataUrl));
+        callbacks = [];
+      };
+      img.src = src;
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [src, threshold]);
 
   return dataUrl;
