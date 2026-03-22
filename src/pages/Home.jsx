@@ -14,7 +14,7 @@ import { customEase } from '../utils/constants';
 
 // A wrapper that guarantees absolutely zero Javascript execution the wrapped component 
 // until it is actually about to enter the viewport (or a timeout fires).
-const LazySection = ({ children, minHeight = '100vh', margin = '200px' }) => {
+const LazySection = ({ children, minHeight = '100vh', margin = '0px' }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin });
   const [shouldLoad, setShouldLoad] = useState(false);

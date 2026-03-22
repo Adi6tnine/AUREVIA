@@ -4,13 +4,14 @@ import { AnimatePresence } from 'framer-motion';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import CartDrawer from './components/CartDrawer';
-import CustomCursor from './components/CustomCursor';
-import ProductModal from './components/ProductModal';
-import Toast from './components/Toast';
+import { lazy, Suspense } from 'react';
+
+const CartDrawer = lazy(() => import('./components/CartDrawer'));
+const CustomCursor = lazy(() => import('./components/CustomCursor'));
+const ProductModal = lazy(() => import('./components/ProductModal'));
+const Toast = lazy(() => import('./components/Toast'));
 
 import Home from './pages/Home';
-import { lazy, Suspense } from 'react';
 
 // Lazy-loaded routes to drastically cut down initial JS execution time
 const ShopPage = lazy(() => import('./pages/ShopPage'));
@@ -151,20 +152,36 @@ export default function App() {
         isMobile ? '' : 'cursor-none'
       }`}
     >
-      <CustomCursor isMobile={isMobile} />
       {!isMobile && <Atmosphere />}
 
       <Navbar cartCount={cartCount} onCartOpen={() => setIsCartOpen(true)} />
 
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onRemove={removeFromCart}
-        onUpdateQty={updateQty}
-      />
+      <Suspense fallback={null}>
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cart}
+          onRemove={removeFromCart}
+          onUpdateQty={updateQty}
+        />
 
-      <Toast toasts={toasts} onDismiss={dismissToast} />
+        <Toast toasts={toasts} onDismiss={dismissToast} />
+        
+        {!isMobile && <CustomCursor isMobile={isMobile} />}
+
+        {/* Product quick-view modal */}
+        <AnimatePresence>
+          {selected && (
+            <ProductModal
+              product={selected}
+              onClose={() => setSelected(null)}
+              onAddToCart={addToCart}
+              isWishlisted={wishlist.includes(selected.id)}
+              onWishlist={toggleWishlist}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
 
       <main className="min-h-screen">
         <AnimatePresence>
