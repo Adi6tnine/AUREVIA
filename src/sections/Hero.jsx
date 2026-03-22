@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import RealisticPearl from '../components/RealisticPearl';
 import PremiumButton from '../components/PremiumButton';
+import Butterfly from '../components/Butterfly';
 import { customEase } from '../utils/constants';
 
 const TITLE = 'AUREVIA'.split('');
@@ -59,11 +60,7 @@ const Hero = () => {
               key={index}
               initial={{ y: '110%', opacity: 0, letterSpacing: '-0.1em' }}
               animate={{ y: 0, opacity: 1, letterSpacing: '-0.02em' }}
-              transition={{
-                duration: 1.6,
-                ease: customEase,
-                delay: 0.2 + index * 0.08,
-              }}
+              transition={{ duration: 1.6, ease: customEase, delay: 0.2 + index * 0.08 }}
             >
               {char}
             </motion.span>

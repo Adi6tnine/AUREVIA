@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { customEase } from '../utils/constants';
+import Butterfly from './Butterfly';
 
 const Navbar = ({ cartCount, onCartOpen }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -62,9 +63,13 @@ const Navbar = ({ cartCount, onCartOpen }) => {
           {/* Center — logo always centered */}
           <h1
             onClick={() => nav('/')}
-            className="text-xl md:text-3xl tracking-[0.3em] text-[#2C2826] font-serif cursor-pointer font-serif-heading italic select-none absolute left-1/2 -translate-x-1/2"
+            className="text-xl md:text-3xl tracking-[0.3em] text-[#2C2826] font-serif cursor-pointer font-serif-heading italic select-none absolute left-1/2 -translate-x-1/2 flex items-center"
           >
-            AUREVIA
+            <span>AUREVI</span>
+            <span className="relative inline-block">
+              A
+              <Butterfly size={85} className="absolute -top-6 -right-8" />
+            </span>
           </h1>
 
           {/* Right — cart */}
