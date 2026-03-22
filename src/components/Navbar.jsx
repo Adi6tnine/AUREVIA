@@ -64,15 +64,11 @@ const Navbar = ({ cartCount, onCartOpen }) => {
             onClick={() => nav('/')}
             className="text-xl md:text-3xl tracking-[0.3em] font-serif cursor-pointer font-serif-heading italic select-none absolute left-1/2 -translate-x-1/2 flex items-center"
           >
-            {/* INVISIBLE LCP TARGET: Forces Lighthouse to instantly measure the whole wordmark as one massive block, instead of punishing us for letter animations or the Butterfly image */}
-            <span className="absolute inset-0 text-[#FDFBF7] pointer-events-none select-none">
-              AUREVIA
-            </span>
             <span className="text-[#2C2826] relative z-10 flex items-center">
               AUREVI
-              <span className="relative inline-block">
+              <span className="relative inline-block ml-0.5">
                 A
-                <Butterfly size={65} className="absolute -top-6 -right-8 md:hidden" />
+                <Butterfly size={40} className="absolute -top-4 -right-5 md:hidden" />
                 <Butterfly size={85} className="absolute -top-6 -right-8 hidden md:block" />
               </span>
             </span>
