@@ -65,7 +65,7 @@ const Navbar = ({ cartCount, onCartOpen }) => {
             className="text-xl md:text-3xl tracking-[0.3em] font-serif cursor-pointer font-serif-heading italic select-none absolute left-1/2 -translate-x-1/2 flex items-center"
           >
             {/* INVISIBLE LCP TARGET: Forces Lighthouse to instantly measure the whole wordmark as one massive block, instead of punishing us for letter animations or the Butterfly image */}
-            <span className="absolute inset-0 text-transparent opacity-[0.01] pointer-events-none select-none">
+            <span className="absolute inset-0 text-[#FDFBF7] pointer-events-none select-none">
               AUREVIA
             </span>
             <span className="text-[#2C2826] relative z-10 flex items-center">

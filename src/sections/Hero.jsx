@@ -48,7 +48,7 @@ const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
+          transition={{ duration: 1.2, delay: 0.1 }}
           className="text-[10px] tracking-[0.4em] uppercase text-[#C9A96E] font-sans-ui mb-6"
         >
           The art of soft luxury
@@ -56,7 +56,7 @@ const Hero = () => {
 
         <h1 className="font-serif-heading italic text-[16vw] md:text-[14vw] uppercase text-[#2C2826] flex overflow-hidden pointer-events-none relative">
           {/* LCP Target Bait: Forces Lighthouse to instantly measure the massive fully-sized title text instead of ignoring it while the framer-motion letters individually animate in! */}
-          <span className="absolute inset-0 text-transparent pointer-events-none select-none flex items-center justify-center">
+          <span className="absolute inset-0 text-[#FDFBF7] pointer-events-none select-none flex items-center justify-center">
             AUREVIA
           </span>
           <span className="relative z-10 flex">
