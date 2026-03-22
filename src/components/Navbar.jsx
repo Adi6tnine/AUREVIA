@@ -60,7 +60,6 @@ const Navbar = ({ cartCount, onCartOpen }) => {
             </div>
           </div>
 
-          {/* Center — logo always centered */}
           <h1
             onClick={() => nav('/')}
             className="text-xl md:text-3xl tracking-[0.3em] text-[#2C2826] font-serif cursor-pointer font-serif-heading italic select-none absolute left-1/2 -translate-x-1/2 flex items-center"
@@ -68,7 +67,8 @@ const Navbar = ({ cartCount, onCartOpen }) => {
             <span>AUREVI</span>
             <span className="relative inline-block">
               A
-              <Butterfly size={85} className="absolute -top-6 -right-8" />
+              <Butterfly size={65} className="absolute -top-6 -right-8 md:hidden" />
+              <Butterfly size={85} className="absolute -top-6 -right-8 hidden md:block" />
             </span>
           </h1>
 
