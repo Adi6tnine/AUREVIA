@@ -28,6 +28,8 @@
       #app-loader {
         position: fixed;
         inset: 0;
+        height: 100vh;
+        height: 100dvh; /* Real centering on mobile */
         z-index: 99999;
         background: #FDFBF7;
         display: flex;
@@ -151,26 +153,32 @@
       }
 
       /* ── Progress bar ── */
-      .loader-bar-track {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 1.5px;
-        background: rgba(201, 169, 110, 0.12);
+      .loader-bar-wrap {
+        width: 140px;
+        height: 1px;
+        background: rgba(201, 169, 110, 0.15);
+        margin-top: 40px;
+        position: relative;
+        border-radius: 2px;
         overflow: hidden;
+        animation: loader-word-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
       }
 
       .loader-bar-fill {
         height: 100%;
-        background: linear-gradient(90deg, transparent, #C9A96E, transparent);
-        width: 40%;
-        animation: loader-sweep 1.6s ease-in-out infinite;
+        background: #C9A96E;
+        width: 0%;
+        border-radius: 2px;
+        /* Simulates natural network loading stutter */
+        animation: fake-loading 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
       }
 
-      @keyframes loader-sweep {
-        0%   { transform: translateX(-150%); }
-        100% { transform: translateX(350%); }
+      @keyframes fake-loading {
+        0%   { width: 0%; }
+        35%  { width: 45%; }
+        60%  { width: 75%; }
+        85%  { width: 85%; }
+        100% { width: 100%; }
       }
     </style>
   </head>
@@ -187,7 +195,7 @@
       </div>
       <div class="loader-title">AUREVIA</div>
       <div class="loader-sub">The art of soft luxury</div>
-      <div class="loader-bar-track">
+      <div class="loader-bar-wrap">
         <div class="loader-bar-fill"></div>
       </div>
     </div>
