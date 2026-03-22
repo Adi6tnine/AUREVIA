@@ -20,22 +20,21 @@ import {
 import useIsMobile from './hooks/useIsMobile';
 import useLocalStorage from './hooks/useLocalStorage';
 
-// Noise texture overlay
+// Static CSS noise overlay — rasterised once, zero per-frame cost
+// The SVG is a 200×200 base64-encoded noise tile composited as a fixed pseudo-element
 const Atmosphere = () => (
-  <svg
-    className="fixed inset-0 w-full h-full opacity-[0.025] pointer-events-none z-50"
-    style={{ mixBlendMode: 'multiply' }}
-  >
-    <filter id="noise">
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.85"
-        numOctaves="3"
-        stitchTiles="stitch"
-      />
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noise)" />
-  </svg>
+  <div
+    aria-hidden="true"
+    className="fixed inset-0 w-full h-full pointer-events-none z-50"
+    style={{
+      opacity: 0.025,
+      mixBlendMode: 'multiply',
+      backgroundImage:
+        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E\")",
+      backgroundSize: '200px 200px',
+      willChange: 'auto',
+    }}
+  />
 );
 
 let toastId = 0;
@@ -112,7 +111,7 @@ export default function App() {
       }`}
     >
       <CustomCursor isMobile={isMobile} />
-      <Atmosphere />
+      {!isMobile && <Atmosphere />}
 
       <Navbar cartCount={cartCount} onCartOpen={() => setIsCartOpen(true)} />
 

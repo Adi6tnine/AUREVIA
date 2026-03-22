@@ -29,7 +29,7 @@ const PearlJourney = () => {
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Pearl */}
         <motion.div
-          style={{ opacity: pearlOpacity, scale: pearlScale, rotate: pearlRotate, filter: pearlBlur }}
+          style={{ opacity: pearlOpacity, scale: pearlScale, rotate: pearlRotate, filter: pearlBlur, willChange: 'transform, opacity, filter' }}
           className="absolute z-10"
         >
           <RealisticPearl className="w-48 h-48 md:w-80 md:h-80" animatePulse={!isMobile} />
@@ -37,13 +37,13 @@ const PearlJourney = () => {
 
         {/* Light sweep */}
         <motion.div
-          style={{ x: sweepX, opacity: sweepOpacity }}
+          style={{ x: sweepX, opacity: sweepOpacity, willChange: 'transform, opacity' }}
           className="absolute inset-0 z-30 pointer-events-none bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-30deg]"
         />
 
         {/* Product image */}
         <motion.div
-          style={{ opacity: productOpacity, scale: productScale, filter: productBlur }}
+          style={{ opacity: productOpacity, scale: productScale, filter: productBlur, willChange: 'transform, opacity, filter' }}
           className="absolute z-20 w-[80vw] md:w-[20rem] aspect-[4/5] rounded-[120px] overflow-hidden shadow-[0_40px_100px_rgba(44,40,38,0.1)] bg-white border border-white/60"
         >
           <PremiumImage

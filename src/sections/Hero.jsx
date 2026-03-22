@@ -14,6 +14,12 @@ const Hero = () => {
   const smoothX = useSpring(mouseX, { damping: 60, stiffness: 120 });
   const smoothY = useSpring(mouseY, { damping: 60, stiffness: 120 });
 
+  // All transforms declared at the top level — no hook calls inside JSX
+  const pearl1X = useTransform(smoothX, [-0.5, 0.5], [-20, 20]);
+  const pearl1Y = useTransform(smoothY, [-0.5, 0.5], [-20, 20]);
+  const pearl2X = useTransform(smoothX, [-0.5, 0.5], [30, -30]);
+  const pearl2Y = useTransform(smoothY, [-0.5, 0.5], [30, -30]);
+
   return (
     <section
       onMouseMove={(e) => {
@@ -24,10 +30,7 @@ const Hero = () => {
     >
       {/* Floating pearl — top left */}
       <motion.div
-        style={{
-          x: useTransform(smoothX, [-0.5, 0.5], [-20, 20]),
-          y: useTransform(smoothY, [-0.5, 0.5], [-20, 20]),
-        }}
+        style={{ x: pearl1X, y: pearl1Y, willChange: 'transform' }}
         className="absolute top-[20%] left-[5%] md:left-[15%] w-20 h-20 md:w-40 md:h-40 opacity-40 blur-[1px]"
       >
         <RealisticPearl className="w-full h-full" animatePulse />
@@ -35,10 +38,7 @@ const Hero = () => {
 
       {/* Floating pearl — bottom right */}
       <motion.div
-        style={{
-          x: useTransform(smoothX, [-0.5, 0.5], [30, -30]),
-          y: useTransform(smoothY, [-0.5, 0.5], [30, -30]),
-        }}
+        style={{ x: pearl2X, y: pearl2Y, willChange: 'transform' }}
         className="absolute bottom-[20%] right-[5%] md:right-[10%] w-32 h-32 md:w-64 md:h-64 opacity-30 blur-[2px]"
       >
         <RealisticPearl className="w-full h-full" />
@@ -96,6 +96,7 @@ const Hero = () => {
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           className="w-px h-8 bg-gradient-to-b from-[#C9A96E]/60 to-transparent"
+          style={{ willChange: 'transform' }}
         />
       </motion.div>
     </section>

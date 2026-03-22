@@ -42,7 +42,7 @@ const CustomCursor = ({ isMobile }) => {
 
   return (
     <motion.div
-      style={{ x: smoothX, y: smoothY }}
+      style={{ x: smoothX, y: smoothY, willChange: 'transform' }}
       className="fixed top-0 left-0 pointer-events-none z-[10000] flex items-center justify-center"
     >
       <motion.div
