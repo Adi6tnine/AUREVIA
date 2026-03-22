@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@200;300;400;500&family=La+Belle+Aurore&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font utilities */
+.font-serif-heading {
+  font-family: 'Cormorant Garamond', serif;
+  line-height: 0.9;
+}
+.font-script {
+  font-family: 'La Belle Aurore', cursive;
+}
+.font-sans-ui {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Hero gradient animation */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(-45deg, #FCE9F1, #E6DDF8, #F5EDD8, #DDF0FF, #FDFBF7, #F0E8F5);
+  background-size: 400% 400%;
+  animation: gradientShift 55s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+/* Pearl sheen overlay */
+.pearl-sheen {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(254, 252, 248, 1) 20%,
+    rgba(230, 221, 248, 0.8) 50%,
+    rgba(252, 233, 241, 0.6) 80%,
+    rgba(180, 170, 190, 0.4) 100%
+  );
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gold accent utility */
+.text-gold { color: #C9A96E; }
+.bg-gold { background-color: #C9A96E; }
+.border-gold { border-color: #C9A96E; }
+
+/* Improved heading line-height for multi-line use */
+.font-serif-heading-loose {
+  font-family: 'Cormorant Garamond', serif;
+  line-height: 1.1;
+}
+
+/* Marquee animation for trust bar */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* Shimmer sweep for PremiumImage placeholder */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
