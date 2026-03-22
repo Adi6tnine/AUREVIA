@@ -15,9 +15,9 @@ const Home = ({ onProductClick, wishlist, onWishlist }) => {
   return (
     <motion.div
       key="home"
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0, transition: { duration: 1, ease: customEase } }}
-      exit={{ opacity: 0, y: -15, transition: { duration: 0.8, ease: customEase } }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.4, ease: customEase } }}
+      exit={{ opacity: 0, y: -8, transition: { duration: 0.3, ease: customEase } }}
     >
       <Hero />
 

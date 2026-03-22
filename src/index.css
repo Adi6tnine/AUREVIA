@@ -15,18 +15,18 @@
   font-family: 'Outfit', sans-serif;
 }
 
-/* Hero gradient animation */
-@keyframes gradientShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+/* Hero gradient — static, GPU-friendly.
+   Animating background-position on a 400% background forces full rasterisation
+   every single frame (major jank). A static radial gradient looks just as rich. */
 .hero-gradient {
-  background: linear-gradient(-45deg, #FCE9F1, #E6DDF8, #F5EDD8, #DDF0FF, #FDFBF7, #F0E8F5);
-  background-size: 400% 400%;
-  animation: gradientShift 55s ease-in-out infinite;
-  opacity: 0.95;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    #FCE9F1 0%,
+    #F0E8F5 25%,
+    #E6DDF8 50%,
+    #F5EDD8 75%,
+    #FDFBF7 100%
+  );
 }
 
 /* Pearl sheen overlay */

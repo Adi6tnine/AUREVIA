@@ -126,7 +126,7 @@ export default function App() {
       <Toast toasts={toasts} onDismiss={dismissToast} />
 
       <main className="min-h-screen">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} />} />
             <Route path="/shop" element={<ShopPage onProductClick={handleProductClick} wishlist={wishlist} onWishlist={toggleWishlist} recentlyViewed={recentlyViewed} />} />

@@ -1,10 +1,9 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react';
 import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 import PremiumImage from '../components/PremiumImage';
 import StarRating from '../components/StarRating';
-import { SkeletonGrid } from '../components/SkeletonCard';
 import { PRODUCTS, CATEGORIES, SORT_OPTIONS, customEase } from '../utils/constants';
 
 // ── Product Card ──────────────────────────────────────────────────────────────
@@ -109,12 +108,6 @@ const Shop = ({ onProductClick, isMobile, wishlist, onWishlist }) => {
   const [sortBy, setSortBy] = useState('featured');
   const [search, setSearch] = useState('');
   const [showSort, setShowSort] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 900);
-    return () => clearTimeout(t);
-  }, []);
 
   const filtered = useMemo(() => {
     let list = [...PRODUCTS];
@@ -248,9 +241,7 @@ const Shop = ({ onProductClick, isMobile, wishlist, onWishlist }) => {
       {/* ── Product grid ── */}
       <div className="px-4 md:px-12 pb-24 md:pb-40">
         <div className="max-w-7xl mx-auto">
-          {isLoading ? (
-            <SkeletonGrid count={8} />
-          ) : filtered.length === 0 ? (
+          {filtered.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -266,24 +257,19 @@ const Shop = ({ onProductClick, isMobile, wishlist, onWishlist }) => {
               </button>
             </motion.div>
           ) : (
-            <motion.div
-              layout
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 lg:gap-10"
-            >
-              <AnimatePresence mode="popLayout">
-                {filtered.map((p, i) => (
-                  <ProductCard
-                    key={p.id}
-                    product={p}
-                    index={i}
-                    onClick={onProductClick}
-                    isMobile={isMobile}
-                    isWishlisted={wishlist.includes(p.id)}
-                    onWishlist={onWishlist}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 lg:gap-10">
+              {filtered.map((p, i) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  index={i}
+                  onClick={onProductClick}
+                  isMobile={isMobile}
+                  isWishlisted={wishlist.includes(p.id)}
+                  onWishlist={onWishlist}
+                />
+              ))}
+            </div>
           )}
         </div>
       </div>
