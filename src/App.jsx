@@ -54,6 +54,20 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  // Remove the splash screen once the app is ready
+  useEffect(() => {
+    const loader = document.getElementById('app-loader');
+    if (loader) {
+      // Delay just slightly to ensure all fonts/paint operations settle
+      const timeout = setTimeout(() => {
+        loader.classList.add('fade-out');
+        // Remove it from DOM completely after transition (700ms) finishes
+        setTimeout(() => loader.remove(), 700);
+      }, 150);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
   const addToast = useCallback((message, type = 'success') => {
     const id = ++toastId;
     setToasts((prev) => [...prev, { id, message, type }]);
