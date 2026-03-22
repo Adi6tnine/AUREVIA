@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useRef, useState, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import Hero from '../sections/Hero';
 import TrustBar from '../components/TrustBar';
 
@@ -11,6 +11,24 @@ const Testimonials = lazy(() => import('../sections/Testimonials'));
 import PremiumButton from '../components/PremiumButton';
 import PremiumImage from '../components/PremiumImage';
 import { customEase } from '../utils/constants';
+
+// A wrapper that guarantees absolutely zero Javascript execution the wrapped component 
+// until it is actually about to enter the viewport (or a timeout fires).
+const LazySection = ({ children, minHeight = '100vh', margin = '200px' }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin });
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (isInView) setShouldLoad(true);
+  }, [isInView]);
+
+  return (
+    <div ref={ref} style={{ minHeight: shouldLoad ? 'auto' : minHeight }}>
+      {shouldLoad && <Suspense fallback={<div style={{ minHeight }} />}>{children}</Suspense>}
+    </div>
+  );
+};
 
 const Home = ({ onProductClick, wishlist, onWishlist }) => {
   const navigate = useNavigate();
@@ -27,19 +45,23 @@ const Home = ({ onProductClick, wishlist, onWishlist }) => {
       {/* Trust marquee right after hero */}
       <TrustBar />
 
-      <Suspense fallback={<div className="h-64" />}>
+      <LazySection minHeight="200vh">
         <PearlJourney />
+      </LazySection>
 
-        {/* Featured products */}
+      {/* Featured products */}
+      <LazySection minHeight="100vh">
         <FeaturedProducts
           onProductClick={onProductClick}
           wishlist={wishlist}
           onWishlist={onWishlist}
         />
+      </LazySection>
 
-        {/* Testimonials */}
+      {/* Testimonials */}
+      <LazySection minHeight="100vh">
         <Testimonials />
-      </Suspense>
+      </LazySection>
 
       {/* Story / CTA section */}
       <section className="bg-[#FDFBF7] py-20 md:py-32">
